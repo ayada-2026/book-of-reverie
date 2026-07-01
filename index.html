@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#1f2937" />
+    <title>몽상의 서</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="workspace" aria-labelledby="app-title">
+        <div class="title-area">
+          <p class="eyebrow">Book of Reverie</p>
+          <h1 id="app-title">몽상의 서</h1>
+        </div>
+
+        <form class="entry-form" id="entryForm">
+          <label for="entryTitle">제목</label>
+          <input id="entryTitle" name="title" type="text" autocomplete="off" placeholder="오늘 떠오른 장면" />
+
+          <label for="entryBody">기록</label>
+          <textarea id="entryBody" name="body" rows="8" placeholder="문장, 이미지, 꿈의 조각을 적어두세요."></textarea>
+
+          <button type="submit">기록하기</button>
+        </form>
+
+        <section class="entries" aria-labelledby="entries-title">
+          <h2 id="entries-title">기록</h2>
+          <div class="entry-list" id="entryList"></div>
+        </section>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>

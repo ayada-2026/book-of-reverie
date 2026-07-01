@@ -577,10 +577,33 @@ const render = () => {
 const getTurnTitle = (battle) => {
   if (state.matchOver && state.matchOutcome === "victory") return "전투에서 승리했습니다";
   if (state.matchOver && state.matchOutcome === "defeat") return "전투에서 패배했습니다";
-  if (battle.outcome === "victory" && battle.bookmarkGain === 2) return "크게 이겼습니다";
-  if (battle.outcome === "victory") return "책갈피를 얻었습니다";
+  if (battle.outcome === "victory") return "승리했습니다";
   if (battle.outcome === "draw") return "버텼습니다";
-  return "흐림이 쌓였습니다";
+  return "패배했습니다";
+};
+
+const getOutcomeChangeText = (battle) => {
+  if (battle.outcome === "victory") return `책갈피 +${battle.bookmarkGain}`;
+  if (battle.outcome === "draw") return "힌트 +1";
+  return `흐림 +${battle.blurGain}`;
+};
+
+const getResultSummary = (battle) => {
+  const playerAttribute = getAttribute(battle.resolvedAttribute).label;
+  const opponentAttribute = getAttribute(battle.opponentCard.attribute).label;
+  const hiddenEffectChangedScore = battle.steps.some((step) => step.includes("숨은 효과"));
+  const defenseSavedTurn = battle.steps.some((step) => step.includes("버팀으로 바꿨습니다"));
+
+  if (defenseSavedTurn) return "반쪽 달패가 작은 패배를 버팀으로 바꿨습니다.";
+  if (battle.outcome === "victory" && battle.affinity === "strong") {
+    return `${playerAttribute}의 흐름이 ${opponentAttribute}을 눌렀습니다.`;
+  }
+  if (battle.outcome === "defeat" && hiddenEffectChangedScore) {
+    return "상대의 숨은 효과로 힘 차이가 벌어졌습니다.";
+  }
+  if (battle.outcome === "draw") return "서로의 기운이 맞물려 간신히 버텼습니다.";
+  if (battle.outcome === "victory") return `${battle.playerCard.name}이 힘의 균형을 가져왔습니다.`;
+  return "상대의 기운을 끝까지 읽지 못했습니다.";
 };
 
 const buildAttributeReason = (battle) => {
@@ -593,23 +616,29 @@ const buildAttributeReason = (battle) => {
 const buildResultMarkup = (battle) => {
   const effect = getHiddenEffect(battle.opponentCard.effect);
   const steps = battle.steps.map((step) => `<li>${step}</li>`).join("");
-  const outcomeText =
-    battle.outcome === "victory"
-      ? `책갈피 +${battle.bookmarkGain}`
-      : battle.outcome === "defeat"
-        ? `흐림 +${battle.blurGain}`
-        : "버팀 · 힌트 +1";
+  const outcomeText = getOutcomeChangeText(battle);
+  const summary = getResultSummary(battle);
 
   return `
-    <dl class="reveal-list">
-      <div><dt>상대 카드 공개</dt><dd>${battle.opponentCard.name} / ${getAttribute(battle.opponentCard.attribute).label} / 힘 ${battle.opponentCard.damage}</dd></div>
-      <div><dt>내 카드</dt><dd>${battle.playerCard.name} / ${getAttribute(battle.resolvedAttribute).label} / 힘 ${battle.playerCard.damage}</dd></div>
-      <div><dt>속성 보정</dt><dd>${buildAttributeReason(battle)}</dd></div>
-      <div><dt>숨은 효과</dt><dd>${effect.label}: ${effect.text}</dd></div>
-      <div><dt>최종 계산</dt><dd>내 점수 ${battle.playerScore} / 상대 점수 ${battle.opponentScore}</dd></div>
-      <div><dt>결과</dt><dd>${outcomeText}</dd></div>
-    </dl>
-    <ul class="result-reasons">${steps}</ul>
+    <div class="result-summary">
+      <div class="result-change">${outcomeText}</div>
+      <dl class="simple-result-list">
+        <div><dt>상대 카드</dt><dd>${battle.opponentCard.name}</dd></div>
+        <div><dt>내 카드</dt><dd>${battle.playerCard.name}</dd></div>
+      </dl>
+      <p class="result-one-line">${summary}</p>
+    </div>
+    <details class="calculation-details">
+      <summary>상세 계산 보기</summary>
+      <dl class="reveal-list">
+        <div><dt>상대 카드</dt><dd>${battle.opponentCard.name} / ${getAttribute(battle.opponentCard.attribute).label} / 힘 ${battle.opponentCard.damage}</dd></div>
+        <div><dt>내 카드</dt><dd>${battle.playerCard.name} / ${getAttribute(battle.resolvedAttribute).label} / 힘 ${battle.playerCard.damage}</dd></div>
+        <div><dt>속성 보정</dt><dd>${buildAttributeReason(battle)}</dd></div>
+        <div><dt>숨은 효과</dt><dd>${effect.label}: ${effect.text}</dd></div>
+        <div><dt>최종 점수</dt><dd>내 점수 ${battle.playerScore} / 상대 점수 ${battle.opponentScore}</dd></div>
+      </dl>
+      <ul class="result-reasons">${steps}</ul>
+    </details>
   `;
 };
 

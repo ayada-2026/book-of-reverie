@@ -718,6 +718,73 @@ h1 {
   line-height: 1.45;
 }
 
+.result-summary {
+  display: grid;
+  gap: 12px;
+}
+
+.result-change {
+  width: fit-content;
+  border: 1px solid rgba(50, 124, 118, 0.22);
+  border-radius: 999px;
+  background: rgba(238, 247, 241, 0.86);
+  color: #225d55;
+  padding: 6px 10px;
+  font-size: 0.9rem;
+  font-weight: 900;
+}
+
+.simple-result-list {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+}
+
+.simple-result-list div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.simple-result-list dt {
+  color: rgba(95, 66, 25, 0.68);
+  font-size: 0.78rem;
+}
+
+.simple-result-list dd {
+  margin: 0;
+  color: #4d3320;
+}
+
+.result-one-line {
+  margin: 0;
+  color: #4d3320;
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.calculation-details {
+  margin-top: 14px;
+  border-top: 1px solid rgba(125, 109, 91, 0.22);
+  padding-top: 12px;
+}
+
+.calculation-details summary {
+  width: fit-content;
+  border: 1px solid rgba(125, 109, 91, 0.28);
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.42);
+  color: #5f4219;
+  padding: 8px 10px;
+  cursor: pointer;
+  font-size: 0.86rem;
+  font-weight: 900;
+}
+
+.calculation-details[open] summary {
+  margin-bottom: 12px;
+}
+
 .reveal-list {
   display: grid;
   gap: 8px;

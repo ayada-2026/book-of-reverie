@@ -450,7 +450,7 @@ const createStaticCardMarkup = (card, options = {}) => {
   if (options.focus) classes.push("focus-preview");
 
   return `
-    <div class="${classes.join(" ")}" style="--card-color: ${attribute.color}">
+    <div class="${classes.join(" ")}" style="--card-color: ${attribute.color}" data-card-id="${card.id}" data-attribute="${card.attribute}">
       <span class="card-symbol">${attribute.symbol}</span>
       <span class="card-name">${card.name}</span>
       <span class="card-meta">${metaText}</span>

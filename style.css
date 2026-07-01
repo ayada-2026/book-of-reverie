@@ -204,6 +204,7 @@ h1 {
 
 .stat-strip {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   gap: 10px;
   margin-bottom: 12px;
@@ -213,6 +214,41 @@ h1 {
 
 .stat-strip strong {
   color: var(--ink);
+}
+
+.match-status {
+  margin-bottom: 12px;
+  border: 1px solid rgba(182, 123, 45, 0.24);
+  border-radius: 7px;
+  background: rgba(255, 247, 223, 0.58);
+  color: #6f4d18;
+  padding: 9px 10px;
+  font-size: 0.84rem;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.duel-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+}
+
+.hint-button {
+  min-height: 36px;
+  border: 1px solid rgba(50, 124, 118, 0.34);
+  border-radius: 7px;
+  background: rgba(238, 247, 241, 0.86);
+  color: #225d55;
+  padding: 0 12px;
+  font-size: 0.84rem;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.hint-button:disabled {
+  opacity: 0.48;
+  cursor: not-allowed;
 }
 
 .chosen-area {
@@ -280,7 +316,7 @@ h1 {
   border: 2px solid color-mix(in srgb, var(--card-color), white 24%);
   border-radius: 7px;
   display: grid;
-  grid-template-rows: 1fr auto auto;
+  grid-template-rows: auto 1fr auto auto auto;
   gap: 4px;
   align-items: center;
   justify-items: center;
@@ -291,6 +327,18 @@ h1 {
   color: var(--ink);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.42);
   cursor: pointer;
+}
+
+.type-badge {
+  justify-self: start;
+  border: 1px solid color-mix(in srgb, var(--card-color), white 18%);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.48);
+  color: color-mix(in srgb, var(--card-color), #1f160d 24%);
+  padding: 3px 7px;
+  font-size: 0.62rem;
+  font-weight: 900;
+  line-height: 1;
 }
 
 .game-card.compact {
@@ -330,6 +378,12 @@ h1 {
 .game-card.disabled {
   filter: grayscale(0.42);
   opacity: 0.56;
+  cursor: not-allowed;
+}
+
+.game-card.used {
+  filter: grayscale(0.58);
+  opacity: 0.48;
   cursor: not-allowed;
 }
 
@@ -381,6 +435,48 @@ h1 {
 
 .focus-preview .card-meta {
   font-size: 0.78rem;
+}
+
+.card-hint {
+  max-width: 100%;
+  color: rgba(77, 64, 51, 0.74);
+  font-size: 0.62rem;
+  font-weight: 800;
+  line-height: 1.2;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.opponent-preview {
+  width: min(148px, 100%);
+  min-height: 138px;
+  border: 2px solid color-mix(in srgb, var(--card-color), white 26%);
+  border-radius: 7px;
+  display: grid;
+  gap: 6px;
+  place-items: center;
+  padding: 10px 8px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.68), rgba(255, 255, 255, 0.2)),
+    color-mix(in srgb, var(--card-color), white 80%);
+  box-shadow: 0 10px 22px rgba(92, 68, 34, 0.12);
+}
+
+.opponent-preview .card-symbol {
+  font-size: 1.75rem;
+}
+
+.masked-name {
+  color: rgba(47, 42, 36, 0.56);
+  font-size: 0.86rem;
+  font-weight: 900;
+  filter: blur(0.6px);
+}
+
+.preview-line {
+  color: #4d4033;
+  font-size: 0.76rem;
+  font-weight: 900;
 }
 
 .battle-button {
@@ -463,6 +559,13 @@ h1 {
   line-height: 1.2;
 }
 
+.tendency {
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
 .current-badge {
   border: 1px solid rgba(50, 124, 118, 0.28);
   border-radius: 999px;
@@ -506,8 +609,28 @@ h1 {
   text-align: center;
 }
 
+.empty-slot.open {
+  border-style: solid;
+  background: rgba(238, 247, 241, 0.62);
+  color: #225d55;
+}
+
 .rule-log-panel {
   padding-bottom: 12px;
+}
+
+.affinity-hints {
+  display: grid;
+  gap: 6px;
+  margin: 0 12px 14px;
+  padding: 10px 12px 10px 28px;
+  border: 1px solid rgba(125, 109, 91, 0.22);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.34);
+  color: #5f4c37;
+  font-size: 0.8rem;
+  font-weight: 800;
+  line-height: 1.35;
 }
 
 .rule-log {
@@ -593,6 +716,41 @@ h1 {
   color: #5f4219;
   font-weight: 800;
   line-height: 1.45;
+}
+
+.reveal-list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+
+.reveal-list div {
+  display: grid;
+  grid-template-columns: 104px 1fr;
+  gap: 10px;
+}
+
+.reveal-list dt {
+  color: rgba(95, 66, 25, 0.72);
+  font-size: 0.78rem;
+}
+
+.reveal-list dd {
+  margin: 0;
+  color: #4d3320;
+}
+
+.result-reasons {
+  display: grid;
+  gap: 5px;
+  margin: 12px 0 0;
+  padding-left: 18px;
+  color: #5f4219;
+}
+
+.found-rule {
+  margin: 12px 0 0;
+  color: #4d3320;
 }
 
 .modal-card button {
@@ -691,5 +849,10 @@ h1 {
 
   .card-slots .card-meta {
     font-size: 0.56rem;
+  }
+
+  .reveal-list div {
+    grid-template-columns: 1fr;
+    gap: 2px;
   }
 }

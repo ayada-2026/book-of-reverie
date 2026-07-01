@@ -126,11 +126,15 @@ const createCardMarkup = (card, options = {}) => {
   `;
 };
 
-const createStaticCardMarkup = (card) => {
+const createStaticCardMarkup = (card, options = {}) => {
   const attribute = getAttribute(card.attribute);
+  const classes = ["game-card", "static-card"];
+
+  if (options.summary) classes.push("summary-card");
+  if (options.focus) classes.push("focus-preview");
 
   return `
-    <div class="game-card compact static-card" style="--card-color: ${attribute.color}">
+    <div class="${classes.join(" ")}" style="--card-color: ${attribute.color}">
       <span class="card-symbol">${attribute.symbol}</span>
       <span class="card-name">${card.name}</span>
       <span class="card-meta">${attribute.label}</span>
@@ -158,14 +162,17 @@ const renderCharacters = () => {
     .map((character) => {
       const isSelected = character.id === state.selectedOpponentId;
       const slots = [
-        ...character.cards.map(createStaticCardMarkup),
+        ...character.cards.map((card) => createStaticCardMarkup(card, { summary: true })),
         '<div class="empty-slot"><span>?</span></div>',
       ].join("");
 
       return `
         <button class="character-row ${isSelected ? "selected" : ""}" type="button" data-character-id="${character.id}">
           <span class="character-icon" style="--character-color: ${character.accent}">${character.icon}</span>
-          <span class="character-name">${character.name}</span>
+          <span class="character-name">
+            ${character.name}
+            ${isSelected ? '<span class="current-badge">현재 상대</span>' : ""}
+          </span>
           <span class="card-slots">${slots}</span>
         </button>
       `;
@@ -178,14 +185,14 @@ const renderFocusCards = () => {
   opponentName.textContent = opponent ? opponent.name : "미선택";
 
   if (state.opponentCard) {
-    opponentPick.innerHTML = createStaticCardMarkup(state.opponentCard);
+    opponentPick.innerHTML = createStaticCardMarkup(state.opponentCard, { focus: true });
   } else {
     opponentPick.innerHTML = "상대를 선택하세요";
   }
 
   const playerCard = playerCards.find((card) => card.id === state.playerCardId);
   if (playerCard) {
-    playerPick.innerHTML = createStaticCardMarkup(playerCard);
+    playerPick.innerHTML = createStaticCardMarkup(playerCard, { focus: true });
   } else {
     playerPick.innerHTML = "카드를 선택하세요";
   }

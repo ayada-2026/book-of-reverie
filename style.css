@@ -237,7 +237,7 @@ h1 {
 }
 
 .pick-placeholder {
-  min-height: 96px;
+  min-height: 138px;
   display: grid;
   place-items: center;
   color: rgba(125, 109, 91, 0.72);
@@ -245,18 +245,38 @@ h1 {
   text-align: center;
 }
 
+.hand-heading {
+  margin-top: 14px;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.hand-heading h2 {
+  margin-bottom: 0;
+  font-size: 1rem;
+}
+
+.hand-heading p {
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
 .player-hand {
   display: grid;
-  grid-template-columns: repeat(5, minmax(86px, 1fr));
+  grid-template-columns: repeat(5, minmax(96px, 1fr));
   gap: 8px;
-  margin-top: 12px;
+  margin-top: 8px;
   overflow-x: auto;
   padding-bottom: 2px;
 }
 
 .game-card {
-  min-width: 86px;
-  min-height: 124px;
+  min-width: 96px;
+  min-height: 136px;
   border: 2px solid color-mix(in srgb, var(--card-color), white 24%);
   border-radius: 7px;
   display: grid;
@@ -283,6 +303,23 @@ h1 {
 
 .static-card {
   width: 100%;
+  cursor: default;
+}
+
+.summary-card {
+  min-width: 0;
+  min-height: 74px;
+  padding: 6px 3px;
+  border-width: 1px;
+}
+
+.focus-preview {
+  width: min(132px, 100%);
+  min-width: 112px;
+  min-height: 138px;
+  padding: 10px 8px;
+  border-width: 2px;
+  box-shadow: 0 10px 22px rgba(92, 68, 34, 0.12);
 }
 
 .game-card.selected {
@@ -305,6 +342,14 @@ h1 {
   font-size: 1.05rem;
 }
 
+.summary-card .card-symbol {
+  font-size: 1.05rem;
+}
+
+.focus-preview .card-symbol {
+  font-size: 1.75rem;
+}
+
 .card-name {
   max-width: 100%;
   color: #2f2a24;
@@ -319,10 +364,23 @@ h1 {
   font-size: 0.64rem;
 }
 
+.summary-card .card-name {
+  display: none;
+}
+
+.focus-preview .card-name {
+  display: block;
+  font-size: 0.84rem;
+}
+
 .card-meta {
   color: var(--muted);
   font-size: 0.7rem;
   font-weight: 800;
+}
+
+.focus-preview .card-meta {
+  font-size: 0.78rem;
 }
 
 .battle-button {
@@ -397,9 +455,23 @@ h1 {
 }
 
 .character-name {
+  display: grid;
+  gap: 5px;
+  justify-items: start;
   font-size: 0.88rem;
   font-weight: 900;
   line-height: 1.2;
+}
+
+.current-badge {
+  border: 1px solid rgba(50, 124, 118, 0.28);
+  border-radius: 999px;
+  background: rgba(50, 124, 118, 0.12);
+  color: #225d55;
+  padding: 3px 7px;
+  font-size: 0.66rem;
+  font-weight: 900;
+  white-space: nowrap;
 }
 
 .card-slots {
@@ -581,7 +653,7 @@ h1 {
   }
 
   .player-hand {
-    grid-template-columns: repeat(5, 92px);
+    grid-template-columns: repeat(5, 104px);
   }
 
   .character-row {
@@ -598,7 +670,7 @@ h1 {
     gap: 4px;
   }
 
-  .card-slots .game-card.compact {
+  .card-slots .summary-card {
     min-width: 0;
     min-height: 66px;
     padding: 5px 2px;

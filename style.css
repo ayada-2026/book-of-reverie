@@ -497,6 +497,15 @@ h1 {
   font-weight: 900;
 }
 
+.empty-slot.hinted {
+  border-color: rgba(182, 123, 45, 0.54);
+  background: rgba(255, 239, 192, 0.34);
+  color: rgba(111, 77, 24, 0.74);
+  font-size: 0.62rem;
+  line-height: 1.2;
+  text-align: center;
+}
+
 .rule-log-panel {
   padding-bottom: 12px;
 }

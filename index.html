@@ -3,34 +3,87 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#1f2937" />
+    <meta name="theme-color" content="#eadfc9" />
     <title>몽상의 서</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <main class="app-shell">
-      <section class="workspace" aria-labelledby="app-title">
-        <div class="title-area">
-          <p class="eyebrow">Book of Reverie</p>
-          <h1 id="app-title">몽상의 서</h1>
-        </div>
+      <section class="game-board" aria-labelledby="app-title">
+        <header class="dream-header">
+          <div class="banner-mark" aria-hidden="true">
+            <span>✦</span>
+            <span>☾</span>
+            <span>⌛</span>
+          </div>
+          <div>
+            <p class="eyebrow">Book of Reverie</p>
+            <h1 id="app-title">몽상의 서</h1>
+            <p class="subtitle">꿈에서 깨어난 카드들</p>
+          </div>
+        </header>
 
-        <form class="entry-form" id="entryForm">
-          <label for="entryTitle">제목</label>
-          <input id="entryTitle" name="title" type="text" autocomplete="off" placeholder="오늘 떠오른 장면" />
+        <button class="reward-panel" id="rewardPanel" type="button">
+          <span class="reward-title">오늘의 보상</span>
+          <span class="reward-track">
+            <span class="reward-item">보석 x100</span>
+            <span class="reward-item yellow">노란 보석 x50</span>
+            <span class="reward-item card">보너스 카드 x1</span>
+          </span>
+          <span class="reward-state" id="rewardState">수령 가능</span>
+        </button>
 
-          <label for="entryBody">기록</label>
-          <textarea id="entryBody" name="body" rows="8" placeholder="문장, 이미지, 꿈의 조각을 적어두세요."></textarea>
+        <section class="duel-panel" aria-label="대결 준비">
+          <div class="stat-strip">
+            <span>상대 <strong id="opponentName">미선택</strong></span>
+            <span>패배 <strong id="defeatCount">0</strong></span>
+          </div>
 
-          <button type="submit">기록하기</button>
-        </form>
+          <div class="chosen-area">
+            <article class="focus-card opponent-focus">
+              <p>상대가 먼저 고른 카드</p>
+              <div id="opponentPick" class="pick-placeholder">상대를 선택하세요</div>
+            </article>
 
-        <section class="entries" aria-labelledby="entries-title">
-          <h2 id="entries-title">기록</h2>
-          <div class="entry-list" id="entryList"></div>
+            <article class="focus-card player-focus">
+              <p>내 대응 카드</p>
+              <div id="playerPick" class="pick-placeholder">카드를 선택하세요</div>
+            </article>
+          </div>
+
+          <div class="player-hand" id="playerHand" aria-label="내 카드 목록"></div>
+          <button class="battle-button" id="battleButton" type="button" disabled>전투 시작</button>
+        </section>
+
+        <section class="character-section" aria-labelledby="character-title">
+          <div class="section-heading">
+            <h2 id="character-title">꿈속 상대</h2>
+            <p>행을 눌러 상대를 고르세요.</p>
+          </div>
+          <div class="character-list" id="characterList"></div>
+        </section>
+
+        <section class="rule-log-panel" aria-labelledby="rule-title">
+          <div class="section-heading">
+            <h2 id="rule-title">발견한 룰 조각</h2>
+            <p>패배할수록 판의 규칙이 조금씩 드러납니다.</p>
+          </div>
+          <ol class="rule-log" id="ruleLog"></ol>
         </section>
       </section>
     </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <dialog class="result-modal" id="resultModal">
+      <div class="modal-card">
+        <p class="modal-kicker">대결 결과</p>
+        <h2 id="resultTitle">패배했습니다</h2>
+        <p id="resultMessage">상대가 먼저 움직였습니다.</p>
+        <div class="rule-fragment" id="resultRule"></div>
+        <button type="button" id="closeModal">닫기</button>
+      </div>
+    </dialog>
 
     <script src="script.js"></script>
   </body>
